@@ -1,0 +1,102 @@
+##Before starting, you will need to install Apache and MySQL to your server. You can install it with the following command
+
+sudo apt-get install apache2 mysql-server -y
+
+##By default, phpMyAdmin is not available in the Ubuntu 18.04 default repository. So, you will need to add the third party PHP repository to your system.
+
+sudo apt-get install software-properties-common -y
+
+sudo add-apt-repository ppa:ondrej/php
+
+##Once the repository is added, install phpMyAdmin
+
+Once the repository is added, install phpMyAdmin
+
+##During the installation, you will be asked to choose the web server and regarding mysql password
+
+sudo apt-get install phpmyadmin php-mbstring php-gettext -y
+
+##Once the phpMyAdmin has been installed, enable the mbstring PHP extension
+
+sudo phpenmod mbstring
+
+##restart Apache service to apply the changes
+
+sudo systemctl restart apache2
+
+##Configure User Authentication
+
+sudo mysql
+
+##Next, check the authentication method of MySQL user
+
+mysql> SELECT user,authentication_string,plugin,host FROM mysql.user;
+
+##You can configure the root account to authenticate with a password
+
+mysql> ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'UserPassword';
+
+##Next, flush the privileges
+
+mysql> FLUSH PRIVILEGES;
+
+##Now, check the authentication methods
+
+mysql> SELECT user,authentication_string,plugin,host FROM mysql.user;
+
+##Finally, exit from the MySQL shell
+
+mysql> exit;
+
+##Now, open your web browser and type the URL http://your-server-ip/phpmyadmin
+
+##Secure PhpMyAdmin
+##phpMyAdmin is now installed and configured. But, it is recommended to secure your phpMyAdmin instance to prevent unauthorized access You can secure
+phpMyAdmin by using Apache's built-in .htaccess authentication and authorization functionalities
+
+sudo vim /etc/apache2/conf-available/phpmyadmin.conf
+
+##Make the following changes
+
+<Directory /usr/share/phpmyadmin>
+    Options SymLinksIfOwnerMatch
+    DirectoryIndex index.php
+    AllowOverride All
+    
+##Save and close the file. Then, restart Apache service to apply the chnages
+
+sudo systemctl restart apache2
+
+##Next, create a .htaccess file inside phpmyadmin directory
+
+sudo vim /usr/share/phpmyadmin/.htaccess
+
+##Add the following lines
+
+AuthType Basic
+AuthName "Restricted Files"
+AuthUserFile /etc/phpmyadmin/.htpasswd
+Require valid-user
+
+##Save and close the file. Then, create a user named admin with the htpasswd utility
+
+sudo htpasswd -c /etc/phpmyadmin/.htpasswd admin
+
+## here you have to inter your passowrd and confirm it.
+
+
+## congratulation now you successfully configure host server!!!!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
