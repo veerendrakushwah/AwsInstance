@@ -87,6 +87,32 @@ sudo htpasswd -c /etc/phpmyadmin/.htpasswd admin
 
 ## congratulation now you successfully configure host server!!!!
 
+##now Enable mod_rewrite
+
+sudo a2enmod rewrite
+
+##To activate these changes restart Apache2
+
+sudo service apache2 restart
+
+##Now check your web page is it working or not If not, follow next Step
+
+##Edit Apache Configuration file
+
+sudo vim /etc/apache2/sites-available/000-default.conf
+
+##Then add following block of code below <VirtualHost *:80>
+
+<Directory /var/www/html>
+    Options Indexes FollowSymLinks MultiViews
+    AllowOverride All
+    Require all granted
+</Directory>
+
+Save the file and exit and restart apache service.
+
+sudo service apache2 restart
+
 
 
 
