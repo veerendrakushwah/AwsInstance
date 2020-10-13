@@ -48,6 +48,10 @@ mysql> SELECT user,authentication_string,plugin,host FROM mysql.user;
 
 mysql> exit;
 
+CREATE USER 'newuser'@'localhost' IDENTIFIED BY 'password';
+
+GRANT ALL PRIVILEGES ON * . * TO 'newuser'@'localhost';
+
 ##Now, open your web browser and type the URL http://your-server-ip/phpmyadmin
 
 ##Secure PhpMyAdmin
