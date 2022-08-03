@@ -100,7 +100,7 @@ sudo vim /etc/apache2/sites-available/000-default.conf
 ##Then add following block of code below <VirtualHost *:80>
 
 <Directory /var/www/html>
-    Options Indexes FollowSymLinks MultiViews
+    Options FollowSymLinks
     AllowOverride All
     Require all granted
 </Directory>
